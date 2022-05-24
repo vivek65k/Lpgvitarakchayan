@@ -1,5 +1,5 @@
   <!-- ======= Hero Section ======= -->
- 
+
   <section id="hero" class="d-flex align-items-center">
     <div class="container-fluid position-relative" data-aos="fade-up" data-aos-delay="100">
 
@@ -36,41 +36,14 @@
          <div class="whatnewslisting">
  <marquee  direction = "up" loop="true" onmouseover="this.stop();" onmouseout="this.start();">
          <ul>
-         
-            <li><a href="https://www.lpgvitarakchayan.in/uploads/Selection Brochure USG - 01.04.2022.pdf" target="_blank">
-            Brochure for selection of LPG Distributors through Online Process Ver 2.0 (English) 
-                      </a></li>
-                      <li><a href="https://www.lpgvitarakchayan.in/uploads/Screenshot_20190109-101338~2.png" target="_blank">
-            Public Notice – Beware of Fraudsters 
-                      </a></li>
-                      <li><a href="https://www.lpgvitarakchayan.in/uploads/Brochure- Lakshadweep_25_3_2022.pdf" target="_blank">
-            Brochure for selection of LPG Distributors through Online process Ver 3.0 (English) – Lakshadweep 
-                      </a></li>
-                      <li><a href="https://www.lpgvitarakchayan.in/faq.php" target="_blank">
-            Frequently Asked Questions (FAQs) 
-                      </a></li>
-                      <li><a href="https://www.lpgvitarakchayan.in/uploads/List of documents to be submitted by the selected candidate.pdf" target="_blank">
-            LIST OF DOCUMENTS TO BE SUBMITTED BY THE SELECTED CANDIDATE AFTER THE DRAW 
-                      </a></li>
-                      <li><a href="https://www.lpgvitarakchayan.in/uploads/User manual for applicant - Online application - LPG Vitarak Chayan.pdf" target="_blank">
-            User manual for applicant - Online application - LPG Vitarak Chayan 
-                      </a></li>
-                      <li><a href="http://petroleum.nic.in" target="_blank">
-            http://petroleum.nic.in 
-                      </a></li>
-                      <li><a href="https://iocl.com" target="_blank">
-            https://iocl.com 
-                      </a></li>
-                      <li><a href="https://bharatpetroleum.com" target="_blank">
-            https://bharatpetroleum.com 
-                      </a></li>
-                      <li><a href="http://www.hindustanpetroleum.com" target="_blank">
-            http://www.hindustanpetroleum.com 
-                      </a></li>
-                      <li><a href="http://mylpg.in" target="_blank">
-            http://mylpg.in 
-                      </a></li>
+          <?php
+         $sql= mysqli_query($conn,"select * from homescreen where type = 'whatsnew'");
+                            while ($row= mysqli_fetch_array($sql)) { ?>
 
+            <li><a href="<?php echo  $row['link']; ?>" target="_blank">
+ <?php echo $row['name'];?> 
+                      </a></li>
+                <?php } ?>
                       </ul>
                               </marquee>
           </div>
@@ -88,39 +61,14 @@
             <h4 class="title"> <span><i class="fa fa-link icon" aria-hidden="true"></i></span><a href="">IMPORTANT LINKS</a></h4>
            <div class="importantlisting" >
             <ul>
-            <li><a href="https://www.lpgvitarakchayan.in/uploads/Selection Brochure USG - 01.04.2022.pdf" target="_blank">
-            Brochure for selection of LPG Distributors through Online Process Ver 2.0 (English) 
+                     <?php
+         $sql= mysqli_query($conn,"select * from homescreen where type = 'implink'");
+                            while ($row= mysqli_fetch_array($sql)) { ?>
+                              <li><a href="admin/pckimages/<?php echo  $row['attachment']; ?>" target="_blank">
+ <?php echo $row['name'];?> 
                       </a></li>
-                      <li><a href="https://www.lpgvitarakchayan.in/uploads/Screenshot_20190109-101338~2.png" target="_blank">
-            Public Notice – Beware of Fraudsters 
-                      </a></li>
-                      <li><a href="https://www.lpgvitarakchayan.in/uploads/Brochure- Lakshadweep_25_3_2022.pdf" target="_blank">
-            Brochure for selection of LPG Distributors through Online process Ver 3.0 (English) – Lakshadweep 
-                      </a></li>
-                      <li><a href="https://www.lpgvitarakchayan.in/faq.php" target="_blank">
-            Frequently Asked Questions (FAQs) 
-                      </a></li>
-                      <li><a href="https://www.lpgvitarakchayan.in/uploads/List of documents to be submitted by the selected candidate.pdf" target="_blank">
-            LIST OF DOCUMENTS TO BE SUBMITTED BY THE SELECTED CANDIDATE AFTER THE DRAW 
-                      </a></li>
-                      <li><a href="https://www.lpgvitarakchayan.in/uploads/User manual for applicant - Online application - LPG Vitarak Chayan.pdf" target="_blank">
-            User manual for applicant - Online application - LPG Vitarak Chayan 
-                      </a></li>
-                      <li><a href="http://petroleum.nic.in" target="_blank">
-            http://petroleum.nic.in 
-                      </a></li>
-                      <li><a href="https://iocl.com" target="_blank">
-            https://iocl.com 
-                      </a></li>
-                      <li><a href="https://bharatpetroleum.com" target="_blank">
-            https://bharatpetroleum.com 
-                      </a></li>
-                      <li><a href="http://www.hindustanpetroleum.com" target="_blank">
-            http://www.hindustanpetroleum.com 
-                      </a></li>
-                      <li><a href="http://mylpg.in" target="_blank">
-            http://mylpg.in 
-                      </a></li>
+                <?php } ?>
+
                       </ul>
           </div>
          

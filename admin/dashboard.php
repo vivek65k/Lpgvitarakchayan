@@ -48,15 +48,20 @@
          	</div>
          	  	<div class="form-group">
          		<label for="">Details</label>
-         		<input type="text" name="description"  required="required" class="form-control" >
+         		<input type="text" name="description"   class="form-control" >
          	</div>
+
+                    <div class="form-group">
+            <label for="">Link</label>
+            <input type="text" name="link"   class="form-control" >
+          </div>
       <div class="form-group">
         <label for=""> Attachment:</label>
-        <input type="file"  name="attachment" required="required"  class="form-control">
+        <input type="file"  name="attachment"   class="form-control">
       </div>
          	 <div class="form-group">
          		<label for="">Type</label>
-            <select class="form-control" id="type" name="type" required>
+            <select class="form-control" id="type" required="required" name="type" required>
               <option value="">----Select  category----</option>
                  <option value="whatsnew">Whats New</option>
                  <option value="implink">IMPORTANT LINKS</option>
@@ -99,6 +104,7 @@
             <tr>
                 <th>Name</th>
                 <th>Details</th>
+                 <th>Link</th>
                 <th>Attachment</th>
                 <th>Section Name</th>
                 <th>Set Position</th>
@@ -116,6 +122,7 @@
             <tr>
                 <td><?php echo ucfirst($row['name']); ?></td>
                 <td><?php echo ucfirst($row['description']); ?></td>
+                    <td><?php echo ucfirst($row['link']); ?></td>
                   <td><?php echo ucfirst($row['attachment']); ?></td>
                   <td><?php echo ucfirst($row['type']); ?></td>
                 <td><?php echo ucfirst($row['pos']); ?></td>
@@ -149,16 +156,21 @@
          	<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
          	<div class="form-group">
          		<label for="">Name</label>
-         		<input type="text" name="name" required="required" value="<?php echo $row['name']; ?>" class="form-control" >
+         		<input type="text" name="name" value="<?php echo $row['name']; ?>" class="form-control" >
          	</div>
          	<div class="form-group">
          		<label for="">Details</label>
-         		<input type="text" name="description"  required="required" value="<?php echo $row['description']; ?>" class="form-control" >
+         		<input type="text" name="description"   value="<?php echo $row['description']; ?>" class="form-control" >
          	</div>
+            <div class="form-group">
+            <label for="">Link</label>
+            <input type="text" name="link"   value="<?php echo $row['link']; ?>" class="form-control" >
+          </div>
               <div class="form-group">
         <label for=""> Attachment</label>
-        <input type="file"  name="attachment" required="required"  class="form-control">
-        <img src="<?php echo dirname($link); ?>/pckimages/<?php echo $row['attachment']; ?>" alt="<?php echo  $row['attachment'];?>" height="100" width="120" title="products Image">
+        <input type="file"  name="attachment"  class="form-control">
+           <a href="<?php echo dirname($link); ?>/pckimages/<?php echo $row['attachment']; ?>" download>Attached File</a>
+     
       </div>
                  <div class="form-group">
             <label for="">Type</label>
@@ -203,6 +215,7 @@
             <tr>
                 <th>Name</th>
                 <th>Details</th>
+                      <th>link</th>
                 <th>Attachment</th>
                 <th>Section Name</th>
                 <th>Set Position</th>
@@ -257,14 +270,17 @@ if (isset($_POST['addNew'])) {
   $name= $_POST['name'];
   $description= $_POST['description'];
   $type= $_POST['type'];
+    $link= $_POST['link'];
 	$pos= $_POST['pos'];
+
 	  $attachment = $_FILES['attachment']['name'];
    $tmp_attachment = $_FILES['attachment']['tmp_name'];
-
+if (!empty($attachment))
+{
 echo $extension = pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION);
 $temp = explode(".", $_FILES["attachment"]["name"]);
 
-if($extension =="jpg" || $extension =="jpeg" || $extension =="png"){
+if($extension =="pdf" || $extension =="txt" || $extension =="docx"|| $extension =="doc" || $extension =="jpg" || $extension =="png" || $extension =="jpeg"){
 
 }else{
   echo "<script> alert('Image should only  jpg, jpeg and png!')</script>";
@@ -286,7 +302,7 @@ echo  $size=filesize($_FILES['attachment']['tmp_name']);
         echo "<script> alert('Please Upload File !')</script>";
         exit(0);
   }
-
+}
 	 $sql= "select * from homescreen where name ='".$name."' and   description = '".$description."'  and type  = '".$type."' ";
 	 if($query=mysqli_query($conn,$sql)){
 
@@ -297,8 +313,10 @@ echo  $size=filesize($_FILES['attachment']['tmp_name']);
          exit(0);
      }
 	}
-
-	$sql= "insert into homescreen(name,description,type,attachment,pos)VALUES('$name','$description','$type','$filename','$pos')";
+else{
+  $filename = '';
+}
+	$sql= "insert into homescreen(name,description,type,link,attachment,pos)VALUES('$name','$description','$type','$link','$filename','$pos')";
 	// echo $sql;
 
 	if ($run= mysqli_query($conn, $sql)) {
@@ -313,7 +331,7 @@ echo  $size=filesize($_FILES['attachment']['tmp_name']);
 
 		 </script>";
 	}else{
-		 echo "<script> alert('Opps Somthing is worng !')</script>";
+		 echo "<script> alert('Opps Somthing is worng1 !')</script>";
 	}
 }
 
@@ -331,10 +349,11 @@ if (isset($_POST['update'])) {
 	$id= $_POST['id'];
 	$attachment=$_FILES['attachment']['name'];
 	$tmp_attachment=$_FILES['attachment']['tmp_name'];
-
+if (!empty($attachment))
+{
 $extension = pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION);
 $temp = explode(".", $_FILES["attachment"]["name"]);
-if($extension =="jpg" || $extension =="jpeg" || $extension =="png"){
+if($extension =="pdf" || $extension =="txt" || $extension =="docx"|| $extension =="doc" || $extension =="jpg" || $extension =="png" || $extension =="jpeg"){
 
 }else{
   echo "<script> alert('Image should only  jpg, jpeg and png!')</script>";
@@ -355,8 +374,11 @@ if($extension =="jpg" || $extension =="jpeg" || $extension =="png"){
         echo "<script> alert('Please Upload File !')</script>";
         exit(0);
   }
-
-	$sql= "update homescreen set name='$name' , description='$description' , type = '$type' , pos= '$pos',attachment='$filename' where id=$id ";
+}
+else{
+  $filename = '';
+}
+	$sql= "update homescreen set name='$name' , description='$description' , type = '$type' ,link='$link', pos= '$pos',attachment='$filename' where id=$id ";
   if ($run= mysqli_query($conn, $sql)) {
 		 echo "<script> 
 		 alert('Lista Updated !');
