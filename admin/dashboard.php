@@ -13,7 +13,7 @@
               <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
                   <i class="mdi mdi-account"></i>
-                </span> Package Lists
+                </span> Dashboard Details
               </h3>
               <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
@@ -41,27 +41,32 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-         <form action="packages.php" method="post" enctype="multipart/form-data">
+         <form action="dashboard.php" method="post" enctype="multipart/form-data">
          	<div class="form-group">
-         		<label for="">Package Name</label>
-         		<input type="text" name="pkgnm"  required="required" class="form-control" >
+         		<label for="">Name</label>
+         		<input type="text" name="name"  required="required" class="form-control" >
          	</div>
          	  	<div class="form-group">
-         		<label for="">Package Details</label>
-         		<input type="text" name="pkgdtls"  required="required" class="form-control" >
+         		<label for="">Details</label>
+         		<input type="text" name="description"  required="required" class="form-control" >
          	</div>
+      <div class="form-group">
+        <label for=""> Attachment:</label>
+        <input type="file"  name="attachment" required="required"  class="form-control">
+      </div>
          	 <div class="form-group">
-         		<label for="">Package Amount</label>
-         		<input type="number" name="pkgamt"  required="required" class="form-control" min="0">
+         		<label for="">Type</label>
+            <select class="form-control" id="type" name="type" required>
+              <option value="">----Select  category----</option>
+                 <option value="whatsnew">Whats New</option>
+                 <option value="implink">IMPORTANT LINKS</option>
+                 <option value="bannerone">Banner Details One</option>
+                    <option value="bannerteo">Banner Details Two</option>
+                  </select>
+         
          	</div>
-             <div class="form-group">
-         		<label for="">Tooltip Details</label>
-         		<input type="text" name="ttd"  required="required" class="form-control">
-         	</div>
-         	   <div class="form-group">
-		    <label for=""> Image Upload:</label>
-		    <input type="file"  name="addimagedata" required="required"  class="form-control">
-		  </div>
+       
+  
       	   <div class="form-group">
          		<label for="">Set Position</label>
          		<input type="number" name="pos"  required="required" class="form-control" min="0">
@@ -92,10 +97,10 @@
           	 <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>Package Name</th>
-                <th>Package Details</th>
-                <th>Package Amount</th>
-                <th>Tooltip Details</th>
+                <th>Name</th>
+                <th>Details</th>
+                <th>Attachment</th>
+                <th>Section Name</th>
                 <th>Set Position</th>
                 <th>Created Date</th>
                 <th>Action</th>
@@ -104,15 +109,15 @@
         </thead>
         <tbody>
         	<?php 
-              $sql= mysqli_query($conn, "select * from packagelist");
+              $sql= mysqli_query($conn, "select * from homescreen");
               while ($row= mysqli_fetch_array($sql)) {
               	?>
              
             <tr>
-                <td><?php echo ucfirst($row['pkgnm']); ?></td>
-                <td><?php echo ucfirst($row['pkgdtls']); ?></td>
-                  <td><?php echo ucfirst($row['pkgamt']); ?></td>
-                  <td><?php echo ucfirst($row['ttd']); ?></td>
+                <td><?php echo ucfirst($row['name']); ?></td>
+                <td><?php echo ucfirst($row['description']); ?></td>
+                  <td><?php echo ucfirst($row['attachment']); ?></td>
+                  <td><?php echo ucfirst($row['type']); ?></td>
                 <td><?php echo ucfirst($row['pos']); ?></td>
                 <td><?php echo date('F jS, Y h:i:s', strtotime($row['created_on'])) ; ?></td>
                 <td><div class="btn-group " role="group" aria-label="Basic example">
@@ -132,41 +137,46 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title"><span class="iconify" data-icon="akar-icons:chat-edit"></span> Update <?php echo $row['pkgnm']; ?></h4>
+        <h4 class="modal-title"><span class="iconify" data-icon="akar-icons:chat-edit"></span> Update <?php echo $row['name']; ?></h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
       
-         <form action="packages.php" method="post"  enctype="multipart/form-data">
+         <form action="dashboard.php" method="post"  enctype="multipart/form-data">
            <!-- in update form id be must included -->
          	<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
          	<div class="form-group">
-         		<label for="">Package Name</label>
-         		<input type="text" name="pkgnm" required="required" value="<?php echo $row['pkgnm']; ?>" class="form-control" >
+         		<label for="">Name</label>
+         		<input type="text" name="name" required="required" value="<?php echo $row['name']; ?>" class="form-control" >
          	</div>
          	<div class="form-group">
-         		<label for="">Package Details</label>
-         		<input type="text" name="pkgdtls"  required="required" value="<?php echo $row['pkgdtls']; ?>" class="form-control" >
+         		<label for="">Details</label>
+         		<input type="text" name="description"  required="required" value="<?php echo $row['description']; ?>" class="form-control" >
          	</div>
-         	<div class="form-group">
-         		<label for="">Package Amount</label>
-         		<input type="number" name="pkgamt"  required="required" value="<?php echo $row['pkgamt']; ?>" class="form-control" min="0">
-         	</div>
-         	<div class="form-group">
-         		<label for="">Tooltip Details</label>
-         		<input type="text" name="ttd"  required="required" value="<?php echo $row['ttd']; ?>" class="form-control" >
-         	</div>
+              <div class="form-group">
+        <label for=""> Attachment</label>
+        <input type="file"  name="attachment" required="required"  class="form-control">
+        <img src="<?php echo dirname($link); ?>/pckimages/<?php echo $row['attachment']; ?>" alt="<?php echo  $row['attachment'];?>" height="100" width="120" title="products Image">
+      </div>
+                 <div class="form-group">
+            <label for="">Type</label>
+            <select class="form-control" id="type" name="type" required>
+              <option value="">----Select  category----</option>
+                 <option value="whatsnew">Whats New</option>
+                 <option value="implink">IMPORTANT LINKS</option>
+                 <option value="bannerone">Banner Details One</option>
+                    <option value="bannerteo">Banner Details Two</option>
+                  </select>
+         
+          </div>
+
          	<div class="form-group">
          		<label for="">Position</label>
          		<input type="number" name="pos"  required="required" value="<?php echo $row['pos']; ?>" class="form-control" min="0">
          	</div>
-           <div class="form-group">
-		    <label for=""> Image Upload:</label>
-		    <input type="file"  name="imagedata" required="required"  class="form-control">
-        <img src="<?php echo dirname($link); ?>/pckimages/<?php echo $row['imagedata']; ?>" alt="<?php echo  $row['imagedata'];?>" height="100" width="120" title="products Image">
-		  </div>
+       
 
 
          	<div class="form-group">
@@ -191,10 +201,10 @@
         </tbody>
         <tfoot>
             <tr>
-                <th>Package Name</th>
-                <th>Package Details</th>
-                <th>Package Amount</th>
-                <th>Tooltip Details</th>
+                <th>Name</th>
+                <th>Details</th>
+                <th>Attachment</th>
+                <th>Section Name</th>
                 <th>Set Position</th>
                 <th>Created Date</th>
                 <th>Action</th>
@@ -223,7 +233,7 @@
 	  }
             $.ajax({
 		        url: "remove.php",
-		        data: { id: id, table: 'packagelist' },
+		        data: { id: id, table: 'homescreen' },
 		      
 		        type: 'POST',
 		        success: function (response) {
@@ -244,17 +254,15 @@
 
 if (isset($_POST['addNew'])) {
 	
-	$pkgnm= $_POST['pkgnm'];
-
-	$pkgdtls= $_POST['pkgdtls'];
-	$pkgamt= $_POST['pkgamt'];
-	$ttd= $_POST['ttd'];
+  $name= $_POST['name'];
+  $description= $_POST['description'];
+  $type= $_POST['type'];
 	$pos= $_POST['pos'];
-	  $addimagedata = $_FILES['addimagedata']['name'];
-   $tmp_addimagedata = $_FILES['addimagedata']['tmp_name'];
+	  $attachment = $_FILES['attachment']['name'];
+   $tmp_attachment = $_FILES['attachment']['tmp_name'];
 
-echo $extension = pathinfo($_FILES['addimagedata']['name'], PATHINFO_EXTENSION);
-$temp = explode(".", $_FILES["addimagedata"]["name"]);
+echo $extension = pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION);
+$temp = explode(".", $_FILES["attachment"]["name"]);
 
 if($extension =="jpg" || $extension =="jpeg" || $extension =="png"){
 
@@ -263,7 +271,7 @@ if($extension =="jpg" || $extension =="jpeg" || $extension =="png"){
         exit(0);
 }
 
-echo  $size=filesize($_FILES['addimagedata']['tmp_name']);
+echo  $size=filesize($_FILES['attachment']['tmp_name']);
         if ($size >10485760)
         {
   
@@ -274,23 +282,23 @@ echo  $size=filesize($_FILES['addimagedata']['tmp_name']);
 
  $filename= $temp[0]."".date("YmdHis").".".$extension;
 
-  if( !move_uploaded_file($tmp_addimagedata,"pckimages/".$filename)){
+  if( !move_uploaded_file($tmp_attachment,"pckimages/".$filename)){
         echo "<script> alert('Please Upload File !')</script>";
         exit(0);
   }
 
-	 $sql= "select * from packagelist where pkgnm ='".$pkgnm."' and pkgdtls = '".$pkgdtls."'  and pkgamt = '".$pkgamt."' ";
+	 $sql= "select * from homescreen where name ='".$name."' and   description = '".$description."'  and type  = '".$type."' ";
 	 if($query=mysqli_query($conn,$sql)){
 
     $row = mysqli_num_rows($query);
 
   if($row>0){
-         echo "<script> alert('Opps Package name is Exits Try Another Name !')</script>";
+         echo "<script> alert('Opps same name and type is Exits Try Another Name !')</script>";
          exit(0);
      }
 	}
 
-	$sql= "insert into packagelist(pkgnm,pkgdtls,pkgamt,ttd,pos,imagedata)VALUES('$pkgnm','$pkgdtls','$pkgamt','$ttd','$pos','$filename')";
+	$sql= "insert into homescreen(name,description,type,attachment,pos)VALUES('$name','$description','$type','$filename','$pos')";
 	// echo $sql;
 
 	if ($run= mysqli_query($conn, $sql)) {
@@ -314,18 +322,18 @@ echo  $size=filesize($_FILES['addimagedata']['tmp_name']);
 
 if (isset($_POST['update'])) {
 	
-	$pkgnm= $_POST['pkgnm'];
+	$name= $_POST['name'];
 
-	$pkgdtls= $_POST['pkgdtls'];
-	$pkgamt= $_POST['pkgamt'];
-	$ttd= $_POST['ttd'];
+	$description= $_POST['description'];
+	$type= $_POST['type'];
+
 	$pos= $_POST['pos'];
 	$id= $_POST['id'];
-	$imagedata=$_FILES['imagedata']['name'];
-	$tmp_imagedata=$_FILES['imagedata']['tmp_name'];
+	$attachment=$_FILES['attachment']['name'];
+	$tmp_attachment=$_FILES['attachment']['tmp_name'];
 
-$extension = pathinfo($_FILES['imagedata']['name'], PATHINFO_EXTENSION);
-$temp = explode(".", $_FILES["imagedata"]["name"]);
+$extension = pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION);
+$temp = explode(".", $_FILES["attachment"]["name"]);
 if($extension =="jpg" || $extension =="jpeg" || $extension =="png"){
 
 }else{
@@ -333,7 +341,7 @@ if($extension =="jpg" || $extension =="jpeg" || $extension =="png"){
         exit(0);
 }
 
- echo $size=filesize($_FILES['imagedata']['tmp_name']);
+ echo $size=filesize($_FILES['attachment']['tmp_name']);
         if ($size > 10485760)
         {
   
@@ -343,12 +351,12 @@ if($extension =="jpg" || $extension =="jpeg" || $extension =="png"){
         }
 
  $filename= $temp[0]."".date("YmdHis").".".$extension;
-	if( !move_uploaded_file($tmp_imagedata,"pckimages/$filename")){
+	if( !move_uploaded_file($tmp_attachment,"pckimages/$filename")){
         echo "<script> alert('Please Upload File !')</script>";
         exit(0);
   }
 
-	$sql= "update packagelist set pkgnm='$pkgnm' , pkgdtls='$pkgdtls' , pkgamt = '$pkgamt' , ttd= '$ttd', pos= '$pos',imagedata='$filename' where id=$id ";
+	$sql= "update homescreen set name='$name' , description='$description' , type = '$type' , pos= '$pos',attachment='$filename' where id=$id ";
   if ($run= mysqli_query($conn, $sql)) {
 		 echo "<script> 
 		 alert('Lista Updated !');

@@ -46,8 +46,8 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="packages.php">
-                <span class="menu-title">Packages Details</span>
+              <a class="nav-link" href="dashboard.php">
+                <span class="menu-title">Modify Dashboard</span>
                 <i class="mdi mdi-airballoon menu-icon"></i>
               </a>
             </li>
