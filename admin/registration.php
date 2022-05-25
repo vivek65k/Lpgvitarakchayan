@@ -44,8 +44,12 @@
                 <th>Mobile No</th>
                 <th>Address Line 1</th>
                 <th>Address Line 2</th>
+              
                 <th>State</th>
+                   <th>District</th>
                 <th>Pincode</th>
+                 <th>Franchise Type</th>
+                  <th>Location Type</th>
                 <th>Attachment</th>
                 <th>Created Date</th>
                 <th>Action</th>
@@ -68,7 +72,10 @@
                   <td><?php echo ucfirst($row['address1']); ?></td>
                   <td><?php echo ucfirst($row['address2']); ?></td>
                   <td><?php echo ucfirst($row['state']); ?></td>
+                    <td><?php echo ucfirst($row['district ']); ?></td>
                     <td><?php echo ucfirst($row['pincode']); ?></td>
+                          <td><?php echo ucfirst($row['franchaisetyp']); ?></td>
+                                <td><?php echo ucfirst($row['locationtyp']); ?></td>
                     <td><?php echo ucfirst($row['attachment']); ?></td>
               
                 <td><?php echo date('F jS, Y h:i:s', strtotime($row['created_on'])) ; ?></td>
@@ -139,12 +146,23 @@
          		<label for="">State</label>
          		<input type="text" name="state"   value="<?php echo $row['state']; ?>" class="form-control" >
          	</div>
+                  <div class="form-group">
+            <label for="">District</label>
+            <input type="text" name="district"   value="<?php echo $row['district']; ?>" class="form-control" >
+          </div>
          		<div class="form-group">
          		<label for="">Pin Code</label>
          		<input type="number" name="pincode"  required="required" value="<?php echo $row['pincode']; ?>" class="form-control" >
          	</div>
-         	 
-
+         
+          <div class="form-group">
+            <label for="">Franchise Type</label>
+            <input type="text" name="franchaisetyp"   value="<?php echo $row['franchaisetyp']; ?>" class="form-control" >
+          </div>
+            <div class="form-group">
+            <label for="">Location Type</label>
+            <input type="text" name="locationtyp"   value="<?php echo $row['locationtyp']; ?>" class="form-control" >
+          </div>
           <div>
           <label for=""> <b style="color:green">Upload Ticket:</b></label>
         <input type="file"  name="attachment"   class="form-control">
@@ -176,15 +194,19 @@
         </tbody>
         <tfoot>
             <tr>
-                 <th>Customer Name</th>
+                <th>Customer Name</th>
                 <th>Fathers Name</th>
                 <th>Gender</th>
                 <th>Email Id</th>
                 <th>Mobile No</th>
                 <th>Address Line 1</th>
                 <th>Address Line 2</th>
+             
                 <th>State</th>
+                    <th>District</th>
                 <th>Pincode</th>
+                 <th>Franchise Type</th>
+                  <th>Location Type</th>
                 <th>Attachment</th>
                 <th>Created Date</th>
                 <th>Action</th>
@@ -245,7 +267,10 @@ if (isset($_POST['update'])) {
 	$address1= $_POST['address1'];
 	$address2= $_POST['address2'];
 	$state= $_POST['state'];
+    $district= $_POST['district'];
   $pincode= $_POST['pincode'];
+  $franchaisetyp= $_POST['franchaisetyp'];
+  $locationtyp= $_POST['locationtyp'];
  
 	$id= $_POST['id'];
   $attachment = $_FILES['attachment']['name'];
@@ -279,7 +304,7 @@ echo  $size=filesize($_FILES['attachment']['tmp_name']);
   }
 
 	
-	$sql= "update applications set name='$name' , parentname='$parentname' , gender='$gender' , email = '$email' , mobileno= '$mobileno', address1= '$address1',address2='$address2',state='$state',attachment='$attachment' ,pincode='$pincode' where id=$id ";
+	$sql= "update applications set name='$name' , parentname='$parentname' , gender='$gender' , franchaisetyp='$franchaisetyp' , district='$district' , locationtyp='$locationtyp' , email = '$email' , mobileno= '$mobileno', address1= '$address1',address2='$address2',state='$state',attachment='$attachment' ,pincode='$pincode' where id=$id ";
   if ($run= mysqli_query($conn, $sql)) {
 		 echo "<script> 
 		 alert('Lista Updated !');
