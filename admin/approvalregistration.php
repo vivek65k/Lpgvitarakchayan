@@ -13,7 +13,7 @@
               <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
                   <i class="mdi mdi-account"></i>
-                </span> Applications
+                </span>Approval Applications
               </h3>
               <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
@@ -44,13 +44,13 @@
                 <th>Mobile No</th>
                 <th>Address Line 1</th>
                 <th>Address Line 2</th>
-              
                 <th>State</th>
-                   <th>District</th>
+                <th>District</th>
                 <th>Pincode</th>
-                 <th>Franchise Type</th>
-                  <th>Location Type</th>
+                <th>Franchise Type</th>
+                <th>Location Type</th>
                 <th>Attachment</th>
+                 <th>Status</th>
                 <th>Created Date</th>
                 <th>Action</th>
                
@@ -68,15 +68,16 @@
                 <td><?php echo ucfirst($row['parentname']); ?></td>
                  <td><?php echo ucfirst($row['gender']); ?></td>
                  <td><?php echo ucfirst($row['email']); ?></td>
-                   <td><?php echo ucfirst($row['mobileno']); ?></td>
+                  <td><?php echo ucfirst($row['mobileno']); ?></td>
                   <td><?php echo ucfirst($row['address1']); ?></td>
                   <td><?php echo ucfirst($row['address2']); ?></td>
                   <td><?php echo ucfirst($row['state']); ?></td>
                     <td><?php echo ucfirst($row['district ']); ?></td>
                     <td><?php echo ucfirst($row['pincode']); ?></td>
-                          <td><?php echo ucfirst($row['franchaisetyp']); ?></td>
-                                <td><?php echo ucfirst($row['locationtyp']); ?></td>
+                    <td><?php echo ucfirst($row['franchaisetyp']); ?></td>
+                    <td><?php echo ucfirst($row['locationtyp']); ?></td>
                     <td><?php echo ucfirst($row['attachment']); ?></td>
+                             <td><?php echo ucfirst($row['payment_status']); ?></td>
               
                 <td><?php echo date('F jS, Y h:i:s', strtotime($row['created_on'])) ; ?></td>
                 <td><div class="btn-group " role="group" aria-label="Basic example">
@@ -103,72 +104,78 @@
       <!-- Modal body -->
       <div class="modal-body">
       
-         <form action="registration.php" method="post"  enctype="multipart/form-data">
+         <form action="approvalregistration.php" method="post"  enctype="multipart/form-data">
            <!-- in update form id be must included -->
          	<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
          	<div class="form-group">
          		<label for="">Customer Name</label>
-         		<input type="text" name="name" required="required" value="<?php echo $row['name']; ?>" class="form-control" >
+         		<input type="text" name="name"  value="<?php echo $row['name']; ?>" class="form-control" disabled>
          	</div>
               <div class="form-group">
             <label for="">Father's Name</label>
-            <input type="text" name="parentname" required="required" value="<?php echo $row['parentname']; ?>" class="form-control" >
+            <input type="text" name="parentname"  value="<?php echo $row['parentname']; ?>" class="form-control" disabled>
           </div>
           
                      <div class="form-group">
             <label for="">Type</label>
-            <select class="form-control" id="gender" required="required" name="gender" required>
+            <select class="form-control" id="gender"  name="gender" disabled>
               <option value="">----Select  category----</option>
                  <option value="Male">Male</option>
                  <option value="Female">Female</option>
                  <option value="Others">Others</option>
-                  </select>
+            </select>
          
           </div>
 
               <div class="form-group">
             <label for="">Email Id</label>
-            <input type="text" name="email"  required="required" value="<?php echo $row['email']; ?>" class="form-control" >
+            <input type="text" name="email"   value="<?php echo $row['email']; ?>" class="form-control"   disabled>
           </div>
          	<div class="form-group">
          		<label for="">Customer Phone No</label>
-         		<input type="text" name="mobileno"  required="required" value="<?php echo $row['mobileno']; ?>" class="form-control" >
+         		<input type="text" name="mobileno"   value="<?php echo $row['mobileno']; ?>" class="form-control" disabled>
          	</div>
          	<div class="form-group">
          		<label for="">Address Line 1</label>
-         		<input type="text" name="address1"  required="required" value="<?php echo $row['address1']; ?>" class="form-control">
+         		<input type="text" name="address1"   value="<?php echo $row['address1']; ?>" class="form-control" disabled>
          	</div>
           <div class="form-group">
             <label for="">Address Line 2</label>
-            <input type="text" name="address2"  required="required" value="<?php echo $row['address2']; ?>" class="form-control">
+            <input type="text" name="address2"   value="<?php echo $row['address2']; ?>" class="form-control" disabled>
           </div>
          	<div class="form-group">
          		<label for="">State</label>
-         		<input type="text" name="state"   value="<?php echo $row['state']; ?>" class="form-control" >
+         		<input type="text" name="state"   value="<?php echo $row['state']; ?>" class="form-control" disabled>
          	</div>
                   <div class="form-group">
             <label for="">District</label>
-            <input type="text" name="district"   value="<?php echo $row['district']; ?>" class="form-control" >
+            <input type="text" name="district"   value="<?php echo $row['district']; ?>" class="form-control" disabled>
           </div>
          		<div class="form-group">
          		<label for="">Pin Code</label>
-         		<input type="number" name="pincode"  required="required" value="<?php echo $row['pincode']; ?>" class="form-control" >
+         		<input type="number" name="pincode"   value="<?php echo $row['pincode']; ?>" class="form-control" disabled>
          	</div>
          
           <div class="form-group">
             <label for="">Franchise Type</label>
-            <input type="text" name="franchaisetyp"   value="<?php echo $row['franchaisetyp']; ?>" class="form-control" >
+            <input type="text" name="franchaisetyp"   value="<?php echo $row['franchaisetyp']; ?>" class="form-control" disabled>
           </div>
             <div class="form-group">
             <label for="">Location Type</label>
-            <input type="text" name="locationtyp"   value="<?php echo $row['locationtyp']; ?>" class="form-control" >
+            <input type="text" name="locationtyp"   value="<?php echo $row['locationtyp']; ?>" class="form-control" disabled>
           </div>
           <div>
           <label for=""> <b style="color:green">Upload Ticket:</b></label>
-        <input type="file"  name="attachment"   class="form-control">
+        <input type="file"  name="attachment"   class="form-control" disabled>
         <a href="<?php echo dirname($link); ?>/docupload/<?php echo $row['attachment']; ?>" download>Download File</a>
         
       </div>
+         <div class="form-group">
+            <label for="">Approval Status</label>
+            <input type="radio" name="payment_status" value="1" <?php if($row['payment_status']==  1) { echo "checked"; } ?> /> Approved <input type="radio" name="payment_status" value="0" <?php if($row['payment_status']==  0) { echo "checked"; } ?> /> Pending
+
+          
+          </div>
       
 
 
@@ -201,13 +208,13 @@
                 <th>Mobile No</th>
                 <th>Address Line 1</th>
                 <th>Address Line 2</th>
-             
                 <th>State</th>
-                    <th>District</th>
+                <th>District</th>
                 <th>Pincode</th>
-                 <th>Franchise Type</th>
-                  <th>Location Type</th>
+                <th>Franchise Type</th>
+                <th>Location Type</th>
                 <th>Attachment</th>
+                     <th>Status</th>
                 <th>Created Date</th>
                 <th>Action</th>
             </tr>
@@ -261,17 +268,16 @@ if (isset($_POST['update'])) {
 	$name= $_POST['name'];
   $parentname = $_POST['parentname'];
 	$gender= $_POST['gender'];
-
 	$email= $_POST['email'];
 	$mobileno= $_POST['mobileno'];
 	$address1= $_POST['address1'];
 	$address2= $_POST['address2'];
 	$state= $_POST['state'];
-    $district= $_POST['district'];
+  $district= $_POST['district'];
   $pincode= $_POST['pincode'];
   $franchaisetyp= $_POST['franchaisetyp'];
   $locationtyp= $_POST['locationtyp'];
- 
+    $payment_status= $_POST['payment_status'];
 	$id= $_POST['id'];
   $attachment = $_FILES['attachment']['name'];
   $tmp_attachment = $_FILES['attachment']['tmp_name'];
@@ -304,7 +310,7 @@ echo  $size=filesize($_FILES['attachment']['tmp_name']);
   }
 
 	
-	$sql= "update applications set name='$name' , parentname='$parentname' , gender='$gender' , franchaisetyp='$franchaisetyp' , district='$district' , locationtyp='$locationtyp' , email = '$email' , mobileno= '$mobileno', address1= '$address1',address2='$address2',state='$state',attachment='$attachment' ,pincode='$pincode' where id=$id ";
+	$sql= "update applications set  payment_status='$payment_status'  where id=$id ";
   if ($run= mysqli_query($conn, $sql)) {
 		 echo "<script> 
 		 alert('Lista Updated !');

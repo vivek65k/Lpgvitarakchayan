@@ -57,6 +57,12 @@
                 <i class="mdi mdi-book-open-page-variant menu-icon"></i>
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="approvalregistration.php">
+                <span class="menu-title">Pending Approvals</span>
+                <i class="mdi mdi-book-open-page-variant menu-icon"></i>
+              </a>
+            </li>
                  <li class="nav-item">
               <a class="nav-link" href="userlst.php">
                 <span class="menu-title">User Details</span>
