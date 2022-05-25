@@ -52,8 +52,8 @@
               </a>
             </li>
              <li class="nav-item">
-              <a class="nav-link" href="bookingdtl.php">
-                <span class="menu-title">Booking Details</span>
+              <a class="nav-link" href="registration.php">
+                <span class="menu-title">Registration Forms</span>
                 <i class="mdi mdi-book-open-page-variant menu-icon"></i>
               </a>
             </li>

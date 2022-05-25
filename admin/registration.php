@@ -13,7 +13,7 @@
               <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
                   <i class="mdi mdi-account"></i>
-                </span> Booking History
+                </span> Applications
               </h3>
               <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
@@ -38,13 +38,15 @@
         <thead>
             <tr>
                 <th>Customer Name</th>
-                <th>Customer Phone No</th>
-                <th>Package Name</th>
+                <th>Fathers Name</th>
+                <th>Gender</th>
                 <th>Email Id</th>
-                <th>No of Persons</th>
-                <th>Booking Date</th>
-                <th>Location</th>
-                <th>Status</th>
+                <th>Mobile No</th>
+                <th>Address Line 1</th>
+                <th>Address Line 2</th>
+                <th>State</th>
+                <th>Pincode</th>
+                <th>Attachment</th>
                 <th>Created Date</th>
                 <th>Action</th>
                
@@ -53,22 +55,22 @@
         <tbody>
         	<?php 
             $status ="";
-              $sql= mysqli_query($conn, "select bk.id,bk.name,bk.email,bk.phoneno,bk.whatsappno,bk.passengersno,bk.bookingdt,bk.location,bk.status,bk.created_on,pk.pkgnm,bk.pkgid,bk.filedetails  from bookingpkg bk, packagelist pk where pk.id = bk.pkgid ");
+              $sql= mysqli_query($conn, "select *  from applications  ");
               while ($row= mysqli_fetch_array($sql)) {
               	?>
              
             <tr>
                 <td><?php echo ucfirst($row['name']); ?></td>
-                <td><?php echo ucfirst($row['phoneno']); ?></td>
-                 <td><?php echo ucfirst($row['pkgnm']); ?></td>
+                <td><?php echo ucfirst($row['parentname']); ?></td>
+                 <td><?php echo ucfirst($row['gender']); ?></td>
                  <td><?php echo ucfirst($row['email']); ?></td>
-                   <td><?php echo ucfirst($row['passengersno']); ?></td>
-                  <td><?php echo ucfirst($row['bookingdt']); ?></td>
-                  <td><?php echo ucfirst($row['location']); ?></td>
-                <td><?php
-                  if ($row['status'] == 1 )
-                    {echo "Active";} 
-                  else {echo "Inactive";}?></td>
+                   <td><?php echo ucfirst($row['mobileno']); ?></td>
+                  <td><?php echo ucfirst($row['address1']); ?></td>
+                  <td><?php echo ucfirst($row['address2']); ?></td>
+                  <td><?php echo ucfirst($row['state']); ?></td>
+                    <td><?php echo ucfirst($row['pincode']); ?></td>
+                    <td><?php echo ucfirst($row['attachment']); ?></td>
+              
                 <td><?php echo date('F jS, Y h:i:s', strtotime($row['created_on'])) ; ?></td>
                 <td><div class="btn-group " role="group" aria-label="Basic example">
 						  <button type="button"  type="button" data-toggle="modal" data-target="#addNew<?php echo $row['id']; ?>" class="btn btn-success"><span class="iconify" data-icon="akar-icons:chat-edit"></span></button>
@@ -94,48 +96,59 @@
       <!-- Modal body -->
       <div class="modal-body">
       
-         <form action="bookingdtl.php" method="post"  enctype="multipart/form-data">
+         <form action="registration.php" method="post"  enctype="multipart/form-data">
            <!-- in update form id be must included -->
          	<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
          	<div class="form-group">
          		<label for="">Customer Name</label>
          		<input type="text" name="name" required="required" value="<?php echo $row['name']; ?>" class="form-control" >
          	</div>
+              <div class="form-group">
+            <label for="">Father's Name</label>
+            <input type="text" name="parentname" required="required" value="<?php echo $row['parentname']; ?>" class="form-control" >
+          </div>
+          
+                     <div class="form-group">
+            <label for="">Type</label>
+            <select class="form-control" id="gender" required="required" name="gender" required>
+              <option value="">----Select  category----</option>
+                 <option value="Male">Male</option>
+                 <option value="Female">Female</option>
+                 <option value="Others">Others</option>
+                  </select>
+         
+          </div>
+
+              <div class="form-group">
+            <label for="">Email Id</label>
+            <input type="text" name="email"  required="required" value="<?php echo $row['email']; ?>" class="form-control" >
+          </div>
          	<div class="form-group">
          		<label for="">Customer Phone No</label>
-         		<input type="text" name="phoneno"  required="required" value="<?php echo $row['phoneno']; ?>" class="form-control" >
+         		<input type="text" name="mobileno"  required="required" value="<?php echo $row['mobileno']; ?>" class="form-control" >
          	</div>
          	<div class="form-group">
-         		<label for="">Package Name</label>
-         		<input type="text" name="pkgnm"  required="required" value="<?php echo $row['pkgnm']; ?>" class="form-control">
+         		<label for="">Address Line 1</label>
+         		<input type="text" name="address1"  required="required" value="<?php echo $row['address1']; ?>" class="form-control">
          	</div>
+          <div class="form-group">
+            <label for="">Address Line 2</label>
+            <input type="text" name="address2"  required="required" value="<?php echo $row['address2']; ?>" class="form-control">
+          </div>
          	<div class="form-group">
-         		<label for="">Email Id</label>
-         		<input type="text" name="email"  required="required" value="<?php echo $row['email']; ?>" class="form-control" >
-         	</div>
-         	<div class="form-group">
-         		<label for="">No of Persons</label>
-         		<input type="number" name="passengersno"  required="required" value="<?php echo $row['passengersno']; ?>" class="form-control" >
+         		<label for="">State</label>
+         		<input type="text" name="state"   value="<?php echo $row['state']; ?>" class="form-control" >
          	</div>
          		<div class="form-group">
-         		<label for="">Booking Date</label>
-         		<input type="date" name="bookingdt"  required="required" value="<?php echo $row['bookingdt']; ?>" class="form-control" >
+         		<label for="">Pin Code</label>
+         		<input type="number" name="pincode"  required="required" value="<?php echo $row['pincode']; ?>" class="form-control" >
          	</div>
          	 
-         		<div class="form-group">
-         		<label for="">Location</label>
-         		<input type="text" name="location"  required="required" value="<?php echo $row['location']; ?>" class="form-control" >
-         	</div>
-         	 <div class="form-group">
-         		<label for="">Status</label>
-            <input type="radio" name="status" value="1" <?php if($row['status']==  1) { echo "checked"; } ?> /> Active <input type="radio" name="status" value="0" <?php if($row['status']==  0) { echo "checked"; } ?> /> Inactive
 
-         	
-         	</div>
           <div>
           <label for=""> <b style="color:green">Upload Ticket:</b></label>
-        <input type="file"  name="filedetails" required="required"  class="form-control">
-        <a href="<?php echo dirname($link); ?>/docupload/<?php echo $row['filedetails']; ?>" download>Download File</a>
+        <input type="file"  name="attachment"   class="form-control">
+        <a href="<?php echo dirname($link); ?>/docupload/<?php echo $row['attachment']; ?>" download>Download File</a>
         
       </div>
       
@@ -163,14 +176,16 @@
         </tbody>
         <tfoot>
             <tr>
-              <th>Customer Name</th>
-                <th>Customer Phone No</th>
-                <th>Package Name</th>
+                 <th>Customer Name</th>
+                <th>Fathers Name</th>
+                <th>Gender</th>
                 <th>Email Id</th>
-                <th>No of Persons</th>
-                <th>Booking Date</th>
-                <th>Location</th>
-                <th>Status</th>
+                <th>Mobile No</th>
+                <th>Address Line 1</th>
+                <th>Address Line 2</th>
+                <th>State</th>
+                <th>Pincode</th>
+                <th>Attachment</th>
                 <th>Created Date</th>
                 <th>Action</th>
             </tr>
@@ -198,7 +213,7 @@
 	  }
             $.ajax({
 		        url: "remove.php",
-		        data: { id: id, table: 'bookingpkg' },
+		        data: { id: id, table: 'applications' },
 		      
 		        type: 'POST',
 		        success: function (response) {
@@ -222,26 +237,23 @@
 if (isset($_POST['update'])) {
 	
 	$name= $_POST['name'];
-  $status = $_POST['status'];
-	$phoneno= $_POST['phoneno'];
+  $parentname = $_POST['parentname'];
+	$gender= $_POST['gender'];
 
 	$email= $_POST['email'];
-	$passengersno= $_POST['passengersno'];
-	$bookingdt= $_POST['bookingdt'];
-	$location= $_POST['location'];
-	$status= $_POST['status'];
+	$mobileno= $_POST['mobileno'];
+	$address1= $_POST['address1'];
+	$address2= $_POST['address2'];
+	$state= $_POST['state'];
+  $pincode= $_POST['pincode'];
+ 
 	$id= $_POST['id'];
-  $filedetails = $_FILES['filedetails']['name'];
-  $tmp_filedetails = $_FILES['filedetails']['tmp_name'];
-  if ($_POST['status'] == 1 && empty($filedetails))
-  {
+  $attachment = $_FILES['attachment']['name'];
+  $tmp_attachment = $_FILES['attachment']['tmp_name'];
+ 
 
-   echo "<script> alert('Attach file First!')</script>";
-        exit(0);
-  }
-
-echo $extension = pathinfo($_FILES['filedetails']['name'], PATHINFO_EXTENSION);
-$temp = explode(".", $_FILES["filedetails"]["name"]);
+echo $extension = pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION);
+$temp = explode(".", $_FILES["attachment"]["name"]);
 
 if($extension =="pdf" || $extension =="txt" || $extension =="docx"|| $extension =="doc" || $extension =="jpg" || $extension =="png" || $extension =="jpeg"){
 
@@ -250,7 +262,7 @@ if($extension =="pdf" || $extension =="txt" || $extension =="docx"|| $extension 
         exit(0);
 }
 
-echo  $size=filesize($_FILES['filedetails']['tmp_name']);
+echo  $size=filesize($_FILES['attachment']['tmp_name']);
         if ($size >10485760)
         {
   
@@ -261,13 +273,13 @@ echo  $size=filesize($_FILES['filedetails']['tmp_name']);
 
  $filename= $temp[0]."".date("YmdHis").".".$extension;
 
-  if( !move_uploaded_file($tmp_filedetails,"docupload/".$filename)){
+  if( !move_uploaded_file($tmp_attachment,"docupload/".$filename)){
         echo "<script> alert('Please Upload File !')</script>";
         exit(0);
   }
 
 	
-	$sql= "update bookingpkg set name='$name' , phoneno='$phoneno' , email = '$email' , passengersno= '$passengersno', bookingdt= '$bookingdt',location='$location',status='$status',filedetails='$filedetails'  where id=$id ";
+	$sql= "update applications set name='$name' , parentname='$parentname' , gender='$gender' , email = '$email' , mobileno= '$mobileno', address1= '$address1',address2='$address2',state='$state',attachment='$attachment' ,pincode='$pincode' where id=$id ";
   if ($run= mysqli_query($conn, $sql)) {
 		 echo "<script> 
 		 alert('Lista Updated !');
