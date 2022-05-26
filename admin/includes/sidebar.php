@@ -46,18 +46,12 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="dashboard.php">
-                <span class="menu-title">Modify Dashboard</span>
+              <a class="nav-link" href="registration.php">
+                <span class="menu-title">Registration Details</span>
                 <i class="mdi mdi-airballoon menu-icon"></i>
               </a>
             </li>
              <li class="nav-item">
-              <a class="nav-link" href="registration.php">
-                <span class="menu-title">Registration Forms</span>
-                <i class="mdi mdi-book-open-page-variant menu-icon"></i>
-              </a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="approvalregistration.php">
                 <span class="menu-title">Pending Approvals</span>
                 <i class="mdi mdi-book-open-page-variant menu-icon"></i>
@@ -70,8 +64,8 @@
               </a>
             </li>
             <li class="nav-item">
-               <a class="nav-link" href="testimonial.php">
-                <span class="menu-title">Testimonial</span>
+               <a class="nav-link" href="dashboard.php">
+                <span class="menu-title">Modify Dashboard</span>
                 <i class="mdi mdi-human-greeting menu-icon"></i>
               </a>
             </li>
