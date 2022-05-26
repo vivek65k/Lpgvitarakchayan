@@ -2,7 +2,7 @@
     <div class="container-scroller">
      
 <?php include('includes/nav.php');  ?>
-
+ 
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
@@ -51,7 +51,7 @@
          		<input type="text" name="description"   class="form-control" >
          	</div>
 
-                    <div class="form-group">
+          <div class="form-group">
             <label for="">Link</label>
             <input type="text" name="link"   class="form-control" >
           </div>
@@ -160,11 +160,11 @@
          	</div>
          	<div class="form-group">
          		<label for="">Details</label>
-         		<input type="text" name="description"   value="<?php echo $row['description']; ?>" class="form-control" >
+         		<input type="text" name="description"  value="<?php echo $row['description']; ?>" class="form-control" >
          	</div>
             <div class="form-group">
             <label for="">Link</label>
-            <input type="text" name="link"   value="<?php echo $row['link']; ?>" class="form-control" >
+            <input type="text" name="link" value="<?php echo $row['link']; ?>" class="form-control" >
           </div>
               <div class="form-group">
         <label for=""> Attachment</label>
@@ -344,7 +344,7 @@ if (isset($_POST['update'])) {
 
 	$description= $_POST['description'];
 	$type= $_POST['type'];
-
+    $link= $_POST['link'];
 	$pos= $_POST['pos'];
 	$id= $_POST['id'];
 	$attachment=$_FILES['attachment']['name'];
@@ -378,6 +378,11 @@ if($extension =="pdf" || $extension =="txt" || $extension =="docx"|| $extension 
 else{
   $filename = '';
 }
+if( !empty($link) && !empty($attachment))
+{
+     echo "<script> alert('Both attachment And link not allowed !')</script>";
+        exit(0);
+}
 	$sql= "update homescreen set name='$name' , description='$description' , type = '$type' ,link='$link', pos= '$pos',attachment='$filename' where id=$id ";
   if ($run= mysqli_query($conn, $sql)) {
 		 echo "<script> 
@@ -395,3 +400,4 @@ else{
 	}
 }
  ?>
+

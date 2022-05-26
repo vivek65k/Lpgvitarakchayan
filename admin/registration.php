@@ -39,15 +39,12 @@
             <tr>
                 <th>Customer Name</th>
                 <th>Fathers Name</th>
-                <th>Gender</th>
-                <th>Email Id</th>
+         
                 <th>Mobile No</th>
                 <th>Address Line 1</th>
-                <th>Address Line 2</th>
-              
-                <th>State</th>
+      
                    <th>District</th>
-                <th>Pincode</th>
+       
                  <th>Franchise Type</th>
                   <th>Location Type</th>
                 <th>Attachment</th>
@@ -66,14 +63,13 @@
             <tr>
                 <td><?php echo ucfirst($row['name']); ?></td>
                 <td><?php echo ucfirst($row['parentname']); ?></td>
-                 <td><?php echo ucfirst($row['gender']); ?></td>
-                 <td><?php echo ucfirst($row['email']); ?></td>
+     
                    <td><?php echo ucfirst($row['mobileno']); ?></td>
                   <td><?php echo ucfirst($row['address1']); ?></td>
-                  <td><?php echo ucfirst($row['address2']); ?></td>
-                  <td><?php echo ucfirst($row['state']); ?></td>
+ 
+               
                     <td><?php echo ucfirst($row['district ']); ?></td>
-                    <td><?php echo ucfirst($row['pincode']); ?></td>
+           
                           <td><?php echo ucfirst($row['franchaisetyp']); ?></td>
                                 <td><?php echo ucfirst($row['locationtyp']); ?></td>
                     <td><?php echo ucfirst($row['attachment']); ?></td>
@@ -194,17 +190,14 @@
         </tbody>
         <tfoot>
             <tr>
-                <th>Customer Name</th>
+              <th>Customer Name</th>
                 <th>Fathers Name</th>
-                <th>Gender</th>
-                <th>Email Id</th>
+         
                 <th>Mobile No</th>
                 <th>Address Line 1</th>
-                <th>Address Line 2</th>
-             
-                <th>State</th>
-                    <th>District</th>
-                <th>Pincode</th>
+      
+                   <th>District</th>
+       
                  <th>Franchise Type</th>
                   <th>Location Type</th>
                 <th>Attachment</th>
