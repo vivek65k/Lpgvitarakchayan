@@ -39,14 +39,11 @@
             <tr>
                 <th>Customer Name</th>
                 <th>Fathers Name</th>
-                <th>Gender</th>
-                <th>Email Id</th>
+               
                 <th>Mobile No</th>
-                <th>Address Line 1</th>
-                <th>Address Line 2</th>
-                <th>State</th>
+    
                 <th>District</th>
-                <th>Pincode</th>
+    
                 <th>Franchise Type</th>
                 <th>Location Type</th>
                 <th>Attachment</th>
@@ -59,21 +56,18 @@
         <tbody>
         	<?php 
             $status ="";
-              $sql= mysqli_query($conn, "select *  from applications  ");
+              $sql= mysqli_query($conn, "select *  from applications  where attachment <> '' ");
               while ($row= mysqli_fetch_array($sql)) {
               	?>
              
             <tr>
                 <td><?php echo ucfirst($row['name']); ?></td>
                 <td><?php echo ucfirst($row['parentname']); ?></td>
-                 <td><?php echo ucfirst($row['gender']); ?></td>
-                 <td><?php echo ucfirst($row['email']); ?></td>
+       
                   <td><?php echo ucfirst($row['mobileno']); ?></td>
-                  <td><?php echo ucfirst($row['address1']); ?></td>
-                  <td><?php echo ucfirst($row['address2']); ?></td>
-                  <td><?php echo ucfirst($row['state']); ?></td>
+
                     <td><?php echo ucfirst($row['district ']); ?></td>
-                    <td><?php echo ucfirst($row['pincode']); ?></td>
+  
                     <td><?php echo ucfirst($row['franchaisetyp']); ?></td>
                     <td><?php echo ucfirst($row['locationtyp']); ?></td>
                     <td><?php echo ucfirst($row['attachment']); ?></td>
@@ -81,7 +75,7 @@
               
                 <td><?php echo date('F jS, Y h:i:s', strtotime($row['created_on'])) ; ?></td>
                 <td><div class="btn-group " role="group" aria-label="Basic example">
-						  <button type="button"  type="button" data-toggle="modal" data-target="#addNew<?php echo $row['id']; ?>" class="btn btn-success"><span class="iconify" data-icon="akar-icons:chat-edit"></span></button>
+						  <button type="button"  type="button" data-toggle="modal" data-target="#addNew<?php echo $row['id']; ?>" class="btn btn-success"><span class="iconify" data-icon="akar-icons:double-check"></span></button>
 						  <button type="button" onclick="remove(<?php echo $row['id']; ?>)" class="btn btn-danger"><span  class="iconify" data-icon="dashicons:table-col-delete"></span></button>
 						  
 						</div>
@@ -203,20 +197,18 @@
             <tr>
                 <th>Customer Name</th>
                 <th>Fathers Name</th>
-                <th>Gender</th>
-                <th>Email Id</th>
+               
                 <th>Mobile No</th>
-                <th>Address Line 1</th>
-                <th>Address Line 2</th>
-                <th>State</th>
+    
                 <th>District</th>
-                <th>Pincode</th>
+    
                 <th>Franchise Type</th>
                 <th>Location Type</th>
                 <th>Attachment</th>
-                     <th>Status</th>
+                 <th>Status</th>
                 <th>Created Date</th>
                 <th>Action</th>
+               
             </tr>
         </tfoot>
     </table>
