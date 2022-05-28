@@ -37,17 +37,17 @@
           	 <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>Customer Name</th>
+               <th>Customer Name</th>
                 <th>Fathers Name</th>
-               
+         
                 <th>Mobile No</th>
-    
-                <th>District</th>
-    
-                <th>Franchise Type</th>
-                <th>Location Type</th>
+                <th>Address Line 1</th>
+      
+                
+       
+         
                 <th>Attachment</th>
-                 <th>Status</th>
+                  <th>Status</th>
                 <th>Created Date</th>
                 <th>Action</th>
                
@@ -66,12 +66,13 @@
        
                   <td><?php echo ucfirst($row['mobileno']); ?></td>
 
-                    <td><?php echo ucfirst($row['district ']); ?></td>
+                    <td><?php echo ucfirst($row['address1']); ?></td>
   
-                    <td><?php echo ucfirst($row['franchaisetyp']); ?></td>
-                    <td><?php echo ucfirst($row['locationtyp']); ?></td>
+  
                     <td><?php echo ucfirst($row['attachment']); ?></td>
-                             <td><?php echo ucfirst($row['payment_status']); ?></td>
+                    <td><?php if($row['payment_status']== 1)
+                    { echo ucfirst('Approved');}
+                    else {echo ucfirst('Pending');} ?></td>
               
                 <td><?php echo date('F jS, Y h:i:s', strtotime($row['created_on'])) ; ?></td>
                 <td><div class="btn-group " role="group" aria-label="Basic example">
@@ -91,7 +92,7 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title"><span class="iconify" data-icon="akar-icons:chat-edit"></span> Update <?php echo $row['name']; ?></h4>
+        <h4 class="modal-title"><span class="iconify" data-icon="akar-icons:chat-edit"></span> Approve <?php echo $row['name']; ?></h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
@@ -133,31 +134,18 @@
          		<label for="">Address Line 1</label>
          		<input type="text" name="address1"   value="<?php echo $row['address1']; ?>" class="form-control" disabled>
          	</div>
-          <div class="form-group">
-            <label for="">Address Line 2</label>
-            <input type="text" name="address2"   value="<?php echo $row['address2']; ?>" class="form-control" disabled>
-          </div>
+     
          	<div class="form-group">
          		<label for="">State</label>
          		<input type="text" name="state"   value="<?php echo $row['state']; ?>" class="form-control" disabled>
          	</div>
-                  <div class="form-group">
-            <label for="">District</label>
-            <input type="text" name="district"   value="<?php echo $row['district']; ?>" class="form-control" disabled>
-          </div>
+    
          		<div class="form-group">
          		<label for="">Pin Code</label>
          		<input type="number" name="pincode"   value="<?php echo $row['pincode']; ?>" class="form-control" disabled>
          	</div>
          
-          <div class="form-group">
-            <label for="">Franchise Type</label>
-            <input type="text" name="franchaisetyp"   value="<?php echo $row['franchaisetyp']; ?>" class="form-control" disabled>
-          </div>
-            <div class="form-group">
-            <label for="">Location Type</label>
-            <input type="text" name="locationtyp"   value="<?php echo $row['locationtyp']; ?>" class="form-control" disabled>
-          </div>
+    
           <div>
           <label for=""> <b style="color:green">Upload Ticket:</b></label>
         <input type="file"  name="attachment"   class="form-control" disabled>
@@ -195,17 +183,17 @@
         </tbody>
         <tfoot>
             <tr>
-                <th>Customer Name</th>
+                  <th>Customer Name</th>
                 <th>Fathers Name</th>
-               
+         
                 <th>Mobile No</th>
-    
-                <th>District</th>
-    
-                <th>Franchise Type</th>
-                <th>Location Type</th>
+                <th>Address Line 1</th>
+      
+                
+       
+         
                 <th>Attachment</th>
-                 <th>Status</th>
+                  <th>Status</th>
                 <th>Created Date</th>
                 <th>Action</th>
                
@@ -263,44 +251,14 @@ if (isset($_POST['update'])) {
 	$email= $_POST['email'];
 	$mobileno= $_POST['mobileno'];
 	$address1= $_POST['address1'];
-	$address2= $_POST['address2'];
+
 	$state= $_POST['state'];
-  $district= $_POST['district'];
+
   $pincode= $_POST['pincode'];
-  $franchaisetyp= $_POST['franchaisetyp'];
-  $locationtyp= $_POST['locationtyp'];
+
     $payment_status= $_POST['payment_status'];
 	$id= $_POST['id'];
-  $attachment = $_FILES['attachment']['name'];
-  $tmp_attachment = $_FILES['attachment']['tmp_name'];
- 
-
-echo $extension = pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION);
-$temp = explode(".", $_FILES["attachment"]["name"]);
-
-if($extension =="pdf" || $extension =="txt" || $extension =="docx"|| $extension =="doc" || $extension =="jpg" || $extension =="png" || $extension =="jpeg"){
-
-}else{
-  echo "<script> alert('documt  should only  pdf, txt and docx!')</script>";
-        exit(0);
-}
-
-echo  $size=filesize($_FILES['attachment']['tmp_name']);
-        if ($size >10485760)
-        {
   
-          echo "<script> alert('documt should not be more then 5 Mb !')</script>";
-        exit(0);
-         
-        }
-
- $filename= $temp[0]."".date("YmdHis").".".$extension;
-
-  if( !move_uploaded_file($tmp_attachment,"docupload/".$filename)){
-        echo "<script> alert('Please Upload File !')</script>";
-        exit(0);
-  }
-
 	
 	$sql= "update applications set  payment_status='$payment_status'  where id=$id ";
   if ($run= mysqli_query($conn, $sql)) {

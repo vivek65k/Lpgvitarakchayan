@@ -1,6 +1,16 @@
 <?php 
 session_start();
  include('../admin/db/config.php');
+  $sql= "select * from user where id=".$_SESSION['id'];
+ $rn= mysqli_query($conn,$sql);
+  $row= mysqli_fetch_array($rn);
+
+    $asql= "select * from  applications where userid=".$_SESSION['id'];
+     $arn= mysqli_query($conn,$asql);
+       $arow= mysqli_fetch_array($arn);
+       $arowCount= mysqli_num_rows($arn);
+       
+
 
  ?>
 
@@ -13,6 +23,7 @@ session_start();
         <meta name="author" content="" />
         <title>LPG Vitarak Chayan - <?php echo $_SESSION['name'];  ?></title>
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -20,6 +31,8 @@ session_start();
         <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -52,54 +65,96 @@ session_start();
                     </h1>
                     <div class="subheading mb-5">
                        Hello  
-                        <a href="mailto:info@email.com"> <?php echo $_SESSION['name'];  ?></a>
+                        <a href="#"> <?php echo $_SESSION['name'];  ?>  <span>  <button class="btn btn-success btn-sm" id="btnAbout"> <i class="fa fa-pencil-square-o"></i> edit </button></span></SP></a>
                     </div>
-                    <p class="lead mb-5">I am experienced in leveraging agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
-                    <div class="social-icons">
-                        <a class="social-icon" href="#!"><i class="fab fa-linkedin-in"></i></a>
-                        <a class="social-icon" href="#!"><i class="fab fa-github"></i></a>
-                        <a class="social-icon" href="#!"><i class="fab fa-twitter"></i></a>
-                        <a class="social-icon" href="#!"><i class="fab fa-facebook-f"></i></a>
-                    </div>
+                    <p class="lead mb-5"><?php echo $row['about']; ?></p>
+                   
+                  <div>
+                      <form method="post" id="aboutform">
+                           <input type="text" name="abouttext" id="abouttext" class="form-control" required="required" placeholder="Tell me about you">
+                           <button type="submit" id="aboutSubmit" class="btn btn-primary">Save</button>
+                      </form>
+                  </div>
+                   
                 </div>
             </section>
             <hr class="m-0" />
             <!-- Experience-->
             <section class="resume-section" id="experience">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">Experience</h2>
+                    <h2 class="mb-5">Application</h2>
+
+
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">Senior Web Developer</h3>
-                            <div class="subheading mb-3">Intelitec Solutions</div>
-                            <p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
+
+                            <?php if($arow['payment_status']== 'Pending'){ ?>
+                              
+                            <h3 class="mb-0">Status</h3>
+                            <div class="subheading mb-3" style="color: green ; font-weight: bolder;"><?php echo $arow['payment_status']; ?></div>
+                            <p> We are reviewing your application generally this process takes 1 week, But sometimes it takes 1 to 2 weeks. As soon as it is approved, here you will get the status <b>Active</b>.</p>
+
+                             <?php }elseif ($arow['payment_status']== 'Active') { ?>
+                                 <div class="card">
+                                    <h1>Active</h1>
+
+                                </div>
+                               
+                            <?php }else{ ?>
+
+
+                           
+                            <form method="post" id="application">
+                            <input type="hidden" name="id" value="<?php echo $_SESSION['id']; ?>">
+                            <div class="form-group">
+                                <label for="">Name</label>
+                                <input type="text" name="name" id="name" required="required" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Father’s name</label>
+                                <input type="text" name="fname" id="fname" required="required" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Gender</label>
+                                <select name="gender" id="gender" class="form-control">
+                                    <option disabled="disabled" selected="selected">Select</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Email</label>
+                                <input type="email" name="email" id="email" required="required" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="">Mobile Number</label>
+                                <input type="number" name="mobile" id="mobile" required="required" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Date Of birth</label>
+                                <input type="date" name="date" id="date" required="required" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Address</label>
+                                <textarea class="form-control" name="address" id="address"></textarea>
+                            </div><br><br>
+                          <div class="form-group">
+                              <input type="submit" class="btn-primary btn" value="Apply" name="apply" id="apply">
+                          </div>
+
+                        </form>
+                         <?php } ?>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">March 2013 - Present</span></div>
+                       
                     </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Web Developer</h3>
-                            <div class="subheading mb-3">Intelitec Solutions</div>
-                            <p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">December 2011 - March 2013</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Junior Web Designer</h3>
-                            <div class="subheading mb-3">Shout! Media Productions</div>
-                            <p>Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">July 2010 - December 2011</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Web Design Intern</h3>
-                            <div class="subheading mb-3">Shout! Media Productions</div>
-                            <p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">September 2008 - June 2010</span></div>
-                    </div>
+
                 </div>
             </section>
             <hr class="m-0" />
@@ -228,5 +283,73 @@ session_start();
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                 $("#aboutform").hide();
+                 $("#btnAbout").click(function(event){
+                     event.preventDefault();
+                   $("#aboutform").show();
+                 });
+
+                 $("#aboutSubmit").click(function(event){
+                    event.preventDefault();
+                  var abouttext= $("#abouttext").val();
+                  if(abouttext==''){
+                    swal("Enter about you !");
+                    return false;
+                  }
+                  var id= "<?php echo $_SESSION['id']; ?>";
+                   
+                    $.ajax({
+                          type: 'POST',
+                          url: "../api/aboutMe.php",
+                          data: {data:abouttext, id:id },
+                          dataType: "text",
+                          success: function(resultData) { alert(resultData) }
+                    });
+                 });
+
+           //Apply
+              $("#apply").click(function(event){
+                    event.preventDefault();
+                  var mobile= $("#mobile").val();
+                  var date= $("#date").val();
+                    var date1 = new Date("01-01-2010");
+                    var date2 = new Date(date);
+                    if(date2> date1){
+                         swal("It's not your DOB (Must be at least Year 2010)");
+                         return false;
+                    }
+
+                   if(mobile.length != 10){
+                      swal("Invalid phone number; "+mobile.length+"(number)");
+                         return false;
+                   }
+                    var data= $("#application").serialize();//only input
+                   
+                    $.ajax({
+                          type: 'POST',
+                          url: "../api/application.php",
+                          data:data,
+                          dataType: "text",
+                          success: function(resultData) {
+                            if(resultData==1){
+                                 alert("Thanks for apply!");
+                                 swal("Good job!", "Your Application send for approval", "success");
+                                 window.location.replace('<?php echo dirname($link); ?>/user');
+                            }else{
+                                swal("Somthing is worng");
+
+                            }
+
+                           }
+                    });
+                 });
+
+
+
+            });
+        </script>
     </body>
 </html>
