@@ -256,13 +256,13 @@ if (isset($_POST['update'])) {
   $tmp_attachment = $_FILES['attachment']['tmp_name'];
  
 
-echo $extension = pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION);
+ $extension = pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION);
 $temp = explode(".", $_FILES["attachment"]["name"]);
 
 if($extension =="pdf" || $extension =="txt" || $extension =="docx"|| $extension =="doc" || $extension =="jpg" || $extension =="png" || $extension =="jpeg"){
 
 }else{
-  echo "<script> alert('documt  should only  pdf, txt and docx!')</script>";
+  echo "<script> alert('document  should only  pdf, txt and docx!')</script>";
         exit(0);
 }
 
@@ -270,7 +270,7 @@ echo  $size=filesize($_FILES['attachment']['tmp_name']);
         if ($size >10485760)
         {
   
-          echo "<script> alert('documt should not be more then 5 Mb !')</script>";
+          echo "<script> alert('document should not be more then 5 Mb !')</script>";
         exit(0);
          
         }

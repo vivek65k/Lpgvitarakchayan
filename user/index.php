@@ -90,13 +90,54 @@ session_start();
                             <h3 class="mb-0">Status</h3>
                             <div class="subheading mb-3" style="color: yellow ; font-weight: bolder;"><?php echo $arow['application_startus']; ?></div>
                             <p> We are reviewing your application generally this process takes 1 week, But sometimes it takes 1 to 2 weeks. As soon as it is approved, here you will get the status <b>Active</b>.</p>
-                            <p><a href=""> <i class="fa fa-download" aria-hidden="true"></i> Download Application</a></p>
+
+                            <p><a href="../invoicemaster/invoice.php"> <i class="fa fa-download" aria-hidden="true"></i> Download Application</a></p>
 
                              <?php }elseif ($arow['application_startus']== 'Approved') { ?>
                                  <div class="subheading mb-3" style="color: green ; font-weight: bolder;"><?php echo $arow['application_startus']; ?></div>
-                                 <div class="card">
-                                    <p>Your application is <b>Approved</b> by admin !  Now you have to pay and uplode the payment recipt here for further process or final process</p>
-                                    <p><a href=""> <i class="fa fa-download" aria-hidden="true"></i> Download Application</a></p>
+                                 <div class="card"style="padding: 10px;">
+                                  <?php 
+                                    $psql="select * from payment where userid=".$_SESSION['id'];
+                                       $prn= mysqli_query($conn,$psql);
+                                       $prow= mysqli_fetch_array($prn);
+                                     if($prow['status']=='NotYetPaid'){
+                                   ?>
+                                   <div style="background-color: #21618C ; color: white ;padding: 10px;">
+                                      <center><p>Your application is <b>Approved</b> by admin !  Now you have to pay and uplode the payment recipt here for further process or final process.</p></center>
+                                   </div>
+                                  
+                                    <?php }
+                                      
+                                       if($prow['status']=='NotYetPaid'){?>
+
+                                           <p> <br>We are reviewing your payment generally this process takes 1 week, As soon as it is approved, here you will get the status <b>Active</b>.</p>
+
+
+                                         <?php }elseif ($prow['status']=='Paid') {?>
+                                           <p><a href="../invoicemaster/invoice.php" style="color: green ; font-weight: bold;"> <i class="fa fa-download" aria-hidden="true"></i> Download KYC Form</a></p>
+                                           
+                                        <?php }else{?>
+                                          <div class="payment_block">
+                                               <form method="post" id="payment" action="index.php" enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                  <label for="">Ref No.</label>
+                                                  <input type="text" name="ref" class="form-control" id="ref">
+                                                </div>
+                                                 <div class="form-group">
+                                                  <label for="">Payment recipt</label>
+                                                 <input type="file" name="recipt" placeholder="" class="form-control" id="recipt">
+                                                </div>
+                                                <div>
+                                                  <input type="submit" id="submit" value="submit" class="btn btn-block btn-success" name="submit">
+                                                </div>                                               
+                                               
+                                              </form>
+                                      
+                                           </div>
+
+                                       <?php } ?>
+
+                                    
 
                                 </div>
                                
@@ -105,7 +146,7 @@ session_start();
                                  <div class="card">
                                    <div class="card" style=" padding: 10px;">
                                     <p>Your application is <b>Rejected</b> by admin !  Due to some reason! you can contact with you agent</p>
-                                    <p><a href=""> <i class="fa fa-download" aria-hidden="true"></i> Download Application</a></p>
+                                    <p><a href="../invoicemaster/invoice.php"> <i class="fa fa-download" aria-hidden="true"></i> Download Application</a></p>
 
                                 </div>
 
@@ -244,3 +285,43 @@ session_start();
         </script>
     </body>
 </html>
+
+<?php 
+ if(isset($_POST['submit'])){
+  $ref= $_POST['ref'];
+  $attachment = $_FILES['recipt']['name'];
+  $tmp_attachment = $_FILES['recipt']['tmp_name'];
+
+ $extension = pathinfo($_FILES['recipt']['name'], PATHINFO_EXTENSION);
+$temp = explode(".", $_FILES["recipt"]["name"]);
+if($extension =="pdf" || $extension =="txt" || $extension =="docx"|| $extension =="doc" || $extension =="jpg" || $extension =="png" || $extension =="jpeg"){
+
+ $filename= $temp[0]."".date("YmdHis").".".$extension;
+  if( !move_uploaded_file($tmp_attachment,"../admin/recipt/".$filename)){    
+        echo "<script> swal('Please Upload valid recipt !')</script>";
+        exit(0);
+  }
+
+  $sql= "insert into payment(userid,recipt,status) values('".$_SESSION['id']."','".$filename."','NotYetPaid')";
+  $run=mysqli_query($conn,$sql);
+  if($run){
+      echo "<script> swal('Woow You made your payment! Now Please wait for review !');
+      alert('ok');
+    
+
+      </script>";
+  }else{
+     echo "<script> swal('Opps Somthing is worng!'); </script>";
+  }
+
+}else{
+  echo "<script> swal('document  should only  pdf, txt and docx!')</script>";
+        exit(0);
+}
+
+
+
+
+ }
+
+ ?>

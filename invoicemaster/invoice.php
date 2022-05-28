@@ -1,4 +1,13 @@
-<?php include('../admin/db/config.php');?>
+<?php
+session_start();
+
+ include('../admin/db/config.php');
+
+  $sql= "select * from user where id=".$_SESSION['id'];
+ $rn= mysqli_query($conn,$sql);
+  $row= mysqli_fetch_array($rn);
+
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -119,33 +128,45 @@
 				<tr class="information">
 					<td colspan="2">
 						<table>
+							   <?php $sql= mysqli_query($conn,"select * from applications where userid=".$_SESSION['id']);
+							    while ($row2= mysqli_fetch_array($sql)) { ?>
 							<tr>
 								<td>
-									Sparksuite, Inc.<br />
-									12345 Sunny Road<br />
-									Sunnyville, CA 12345
+									Applicants Name: <?php echo $row2['name'] ?><br />
+									Parent Name: <?php echo $row2['parentname'] ?><br />
+									Address : <?php echo $row2['address1'] ?> <br />
 								</td>
+								<?php if(empty($row2['attachment'])){?>
+	<td>
+									<img src="rejected.png" style="width: 20%;" />
+							   </td>
+							    <?php }else {?>
 
 								<td>
-									Acme Corp.<br />
-									John Doe<br />
-									john@example.com
+								<img src="../admin/docupload/<?php echo $row2['attachment']; ?>" style="width: 40%;" />
 								</td>
+							<?php  }	?>
 							</tr>
+							
 						</table>
 					</td>
 				</tr>
 
 				<tr class="heading">
-					<td>Payment Method</td>
+					<td>Payment Details</td>
 
-					<td>Check #</td>
+						<td>Status</td>
+				
 				</tr>
 
 				<tr class="details">
-					<td>Check</td>
+					<td>Paymaent Status</td>
+                <?php if($row2['payment_status'] == 1){?>
 
-					<td>1000</td>
+					<td style="font-weight:bold;color: green; ">Paid</td>
+				<?php } else {?>
+					<td style="font-weight:bold; color: red;">Not Yet Paid</td>
+				 <?php } }	?>
 				</tr>
 
 				<tr class="heading">
@@ -177,7 +198,7 @@
 
 					<td>Total: $385.00</td>
 				</tr>
-               <?php $sql= mysqli_query($conn,"select * from applications ");
+               <?php $sql= mysqli_query($conn,"select * from applications where userid=".$_SESSION['id']);
                             while ($row= mysqli_fetch_array($sql)) { 
                                 if($row['application_startus'] == 'Approved'){
 
